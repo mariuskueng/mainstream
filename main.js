@@ -1,9 +1,27 @@
+var concerts = [];
+var venues = [];
+var cities = [];
+var concertNode;
+
 // Concert class
-function Concert(d, a, v) {
+function Concert(d, a, v, c) {
     this.date = d;
     this.artist = a;
+    this.venue = new Venue(v);
+    this.city = new City(c);
+    console.log(this.city);
+}
+
+function Venue(v) {
     this.venue = v;
-    this.city;
+}
+
+function City(c) {
+    this.city = c;
+    console.log(this.city);
+    if (!$.inArray(this.city, cities)) {
+        cities.push(this.city);
+    }
 }
 
 function loadConcertData(data) {
@@ -26,7 +44,6 @@ function loadConcertData(data) {
     // separate each line into array item
     concertData = concertDataText.split("\n");
 
-    var concerts = [];
     var substringIndex = 0;
 
     for (var i = 0; i < concertData.length; i++) {
@@ -34,6 +51,7 @@ function loadConcertData(data) {
         var dateRange = concertData[i].substring(0, 11);
         var artist;
         var venue;
+        var city;
 
         if (dateRange.indexOf("–") > -1) { // is festival
             substringIndex = 11;
@@ -46,26 +64,33 @@ function loadConcertData(data) {
             date = concertData[i].substring(0, substringIndex);
             artist = concertData[i].substring(substringIndex + 1, concertData[i].length).split(",")[0];
             venue = concertData[i].substring(substringIndex + 1, concertData[i].length).split(",")[1].split("\n")[0];
+            city = venue.split(" ");
+            city = city[city.length - 1];
         }
-        concerts.push(
-            new Concert(
-                date,
-                artist.trim(),
-                venue.trim()
-        ));
+
+        artist = artist.trim();
+        venue = venue.trim();
+
+        var concert = new Concert(date, artist, venue, city);
+
+        concerts.push(concert);
     };
 
-    var concertNode = $("#concerts");
+    renderConcerts();
+}
 
+function renderConcerts() {
     for (var i = 0; i < concerts.length; i++) {
-        concertNode.append("<p>" + concerts[i].date + ": " + concerts[i].artist + ", " + concerts[i].venue + "</p>");
+        concertNode.append("<p>" + concerts[i].date + ": " + concerts[i].artist + ", " + concerts[i].venue.venue + "</p>");
     };
 }
 
 $(document).ready(function(){
+    concertNode = $("#concerts");
 
-    // $.get("http://mainstream.radiox.ch/konzerte", function(data){
-    //     loadConcertData($(data));
-    // });
+    concertNode.html("");
+    $.get("http://mainstream.radiox.ch/konzerte", function(data){
+        loadConcertData($(data));
+    });
 
 });
