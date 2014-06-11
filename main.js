@@ -51,7 +51,7 @@ function loadConcertData(data) {
         var date;
         var dateRange = concertData[i].split(" ")[0]
         var artist;
-        var venue;
+        var venue = "";
         var city;
 
         if (dateRange.indexOf("–") > -1) { // is festival
@@ -81,7 +81,7 @@ function loadConcertData(data) {
 
 function renderConcerts(element) {
     for (var i = 0; i < concerts.length; i++) {
-        element.append("<p>" + concerts[i].date + ": " + concerts[i].artist + ", " + concerts[i].venue.venue + ", " + concerts[i].city.city "</p>");
+        element.append("<p>" + concerts[i].date + ": " + concerts[i].artist + ", " + concerts[i].venue.venue + ", " + concerts[i].city.city + "</p>");
     };
 }
 
