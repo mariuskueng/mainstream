@@ -9,7 +9,6 @@ function Concert(d, a, v, c) {
     this.artist = a;
     this.venue = new Venue(v);
     this.city = new City(c);
-    console.log(this.city);
 }
 
 function Venue(v) {
@@ -18,7 +17,6 @@ function Venue(v) {
 
 function City(c) {
     this.city = c;
-    console.log(this.city);
     if (!$.inArray(this.city, cities)) {
         cities.push(this.city);
     }
@@ -38,6 +36,7 @@ function loadConcertData(data) {
         concertDataText += concertData[i].innerHTML;
     };
 
+
     // remove html line breaks
     concertDataText = concertDataText.replace(re, '')
 
@@ -47,8 +46,10 @@ function loadConcertData(data) {
     var substringIndex = 0;
 
     for (var i = 0; i < concertData.length; i++) {
+        concertData[i] = concertData[i].trim();
+
         var date;
-        var dateRange = concertData[i].substring(0, 11);
+        var dateRange = concertData[i].split(" ")[0]
         var artist;
         var venue;
         var city;
@@ -63,34 +64,34 @@ function loadConcertData(data) {
             substringIndex = 5;
             date = concertData[i].substring(0, substringIndex);
             artist = concertData[i].substring(substringIndex + 1, concertData[i].length).split(",")[0];
-            venue = concertData[i].substring(substringIndex + 1, concertData[i].length).split(",")[1].split("\n")[0];
-            city = venue.split(" ");
-            city = city[city.length - 1];
+            var location = concertData[i].substring(substringIndex + 1, concertData[i].length).split(",")[1].split(" ");
+
+            for (var j = 1; j < location.length - 1; j++) {
+                venue += " " + location[j];
+            }
+            city = location[location.length - 1];
         }
 
-        artist = artist.trim();
-        venue = venue.trim();
-
-        var concert = new Concert(date, artist, venue, city);
-
-        concerts.push(concert);
+        concerts.push(new Concert(date, artist, venue, city));
+        venue = "";
     };
 
-    renderConcerts();
+    renderConcerts(concertNode);
 }
 
-function renderConcerts() {
+function renderConcerts(element) {
     for (var i = 0; i < concerts.length; i++) {
-        concertNode.append("<p>" + concerts[i].date + ": " + concerts[i].artist + ", " + concerts[i].venue.venue + "</p>");
+        element.append("<p>" + concerts[i].date + ": " + concerts[i].artist + ", " + concerts[i].venue.venue + ", " + concerts[i].city.city "</p>");
     };
 }
 
 $(document).ready(function(){
     concertNode = $("#concerts");
+    loadConcertData($("#data"));
 
-    concertNode.html("");
-    $.get("http://mainstream.radiox.ch/konzerte", function(data){
-        loadConcertData($(data));
-    });
+    // concertNode.html("");
+    // $.get("http://mainstream.radiox.ch/konzerte", function(data){
+    //     loadConcertData($(data));
+    // });
 
 });
