@@ -4,11 +4,12 @@ var cities = [];
 var concertNode;
 
 // Concert class
-function Concert(d, a, v, c) {
+function Concert(d, a, v, c, f) {
     this.date = d;
     this.artist = a;
     this.venue = new Venue(v);
     this.city = new City(c);
+    this.isFestival = f;
 }
 
 function Venue(v) {
@@ -53,6 +54,7 @@ function loadConcertData(data) {
         var artist;
         var venue = "";
         var city;
+        var isFestival = false;
 
         if (dateRange.indexOf("–") > -1) { // is festival
             substringIndex = 11;
@@ -60,6 +62,7 @@ function loadConcertData(data) {
             venue = concertData[i].split("mit");
             venue = venue[0].substring(substringIndex, venue[0].length)
             artist = concertData[i].substring(date.length + venue.length, concertData[i].length).replace("mit ", "");
+            isFestival = true;
         } else { // is single concert
             substringIndex = 5;
             date = concertData[i].substring(0, substringIndex);
@@ -72,7 +75,7 @@ function loadConcertData(data) {
             city = location[location.length - 1];
         }
 
-        concerts.push(new Concert(date, artist, venue, city));
+        concerts.push(new Concert(date, artist, venue, city, isFestival));
         venue = "";
     };
 
