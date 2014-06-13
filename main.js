@@ -81,7 +81,7 @@ function loadConcertData(data) {
             for (var j = 1; j < location.length - 1; j++) {
                 venue += " " + location[j];
             }
-            city = location[location.length - 1];
+            city = location[location.length - 1].replace(/(<([^>]+)>)/ig,"");
         }
 
         concerts.push(new Concert(date, artist, venue, city, isFestival));
