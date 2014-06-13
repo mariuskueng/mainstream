@@ -14,11 +14,16 @@ function Concert(d, a, v, c, f) {
 
 function Venue(v) {
     this.venue = v;
+
+    if ($.inArray(this.venue, venues) === -1) {
+        venues.push(this.venue);
+    }
 }
 
 function City(c) {
     this.city = c;
-    if (!$.inArray(this.city, cities)) {
+
+    if ($.inArray(this.city, cities) === -1) {
         cities.push(this.city);
     }
 }
@@ -40,7 +45,7 @@ function loadConcertData(data) {
 
     // remove html line breaks
     var re = new RegExp("<br>", 'g');
-    concertDataText = concertDataText.replace(re, '')
+    concertDataText = concertDataText.replace(re, '');
 
     // separate each line into array item
     concertData = concertDataText.split("\n");
