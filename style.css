@@ -2,6 +2,12 @@ body {
     font: lighter 1em "Helvetica Neue";
 }
 
+.header {
+    height: 207px;
+    width: 100%;
+    background: url("mainstream.png") center no-repeat;
+}
+
 #cities:after {
     clear: both;
 }
@@ -15,8 +21,9 @@ body {
     list-style: none;
 }
 
-.city-filter {
+#cities li a {
     padding-right: 0.5em;
+    color: #000;
 }
 
 #concerts {

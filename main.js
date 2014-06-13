@@ -13,7 +13,7 @@ var cities = [
     "frauenfeld",
     "freiburg i. b.",
     "fribourg",
-    "gallen",
+    "st. gallen",
     "genf",
     "horgen",
     "langenthal",
@@ -152,30 +152,45 @@ function loadConcertData(data) {
 function renderConcerts(element, list) {
     element.empty();
     for (var i = 0; i < list.length; i++) {
-        element.append("<p>" + list[i].getDate() + ": " + list[i].artist + ", " + list[i].venue.venue + ", " + list[i].city.city + "</p>");
+        element.append("<p>" + list[i].getDate() + ": <strong>" + list[i].artist + "</strong>, " + list[i].venue.venue + ", " + list[i].city.city + "</p>");
     };
 }
 
 function renderCities() {
     cities.sort();
     for (var i = 0; i < cities.length; i++) {
-        $('#cities ul').append("<li><a href=#"+cities[i]+" class='city-filter'>"+cities[i]+"</a></li>");
+        $('#cities ul').append("<li><a href=#"+cities[i]+">"+cities[i]+"</a></li>");
     }
 
-    $('.city-filter').on('click', function(){
+    $('#cities li a').on('click', function(){
         var city = $(this).text();
         renderConcerts($("#concerts"), getConcertsCityQuery(city));
+        setActiveCity(city);
     })
 }
 
 function getConcertsCityQuery(city) {
     var query = [];
+
+    if(city === "alle") return concerts;
+
     for (var i = 0; i < concerts.length; i++) {
         if (concerts[i].city.city === city) {
             query.push(concerts[i]);
         }
     }
     return query;
+}
+
+function setActiveCity(city) {
+    var cities = $('#cities li a');
+    cities.css("font-weight", "lighter");
+
+    for (var i = 0; i < cities.length; i++) {
+        if (city === $(cities[i]).text()) {
+            $(cities[i]).css("font-weight", "bold");
+        }
+    };
 }
 
 $(document).ready(function(){
