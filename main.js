@@ -10,7 +10,6 @@ var cities = [
     "crans-près-céligny",
     "düdingen",
     "feldkirch",
-    "nyon",
     "frauenfeld",
     "freiburg i. b.",
     "fribourg",
@@ -30,7 +29,6 @@ var cities = [
     "neuchâtel",
     "nyon",
     "olten",
-    "panik",
     "pratteln",
     "rorschach",
     "brugg",
@@ -88,8 +86,6 @@ function City(c) {
             this.city = cities[i];
         }
     }
-
-    console.log(this.city);
 }
 
 function loadConcertData(data) {
@@ -163,7 +159,7 @@ function renderConcerts(element, list) {
 function renderCities() {
     cities.sort();
     for (var i = 0; i < cities.length; i++) {
-        $('#cities').append("<a href=#"+cities[i]+" class='city-filter'>"+cities[i]+"</a>");
+        $('#cities ul').append("<li><a href=#"+cities[i]+" class='city-filter'>"+cities[i]+"</a></li>");
     }
 
     $('.city-filter').on('click', function(){

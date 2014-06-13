@@ -1,3 +1,25 @@
+body {
+    font: lighter 1em "Helvetica Neue";
+}
+
+#cities:after {
+    clear: both;
+}
+
+#cities ul {
+    padding: 0;
+}
+
+#cities li{
+    float: left;
+    list-style: none;
+}
+
 .city-filter {
-    padding-right: 5px;
+    padding-right: 0.5em;
+}
+
+#concerts {
+    padding-top: 1em;
+    clear: both;
 }
