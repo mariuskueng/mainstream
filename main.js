@@ -10,9 +10,22 @@ function Concert(d, a, v, c, f) {
     this.venue = new Venue(v);
     this.city = new City(c);
     this.isFestival = f;
+
+    if (!this.isFestival) {
+        this.date = new Date(2014, parseInt(d.split(".")[1]), parseInt(d.split(".")[0]));
+    } else {
+        var day = this.date.split('.')[0];
+        var month = this.date.split("– ")[1].split(".")[0];
+        this.date = new Date(2014, month, day);
+    }
 }
+
 Concert.prototype.render = function(){
     return "";
+};
+
+Concert.prototype.getDate = function(){
+    return this.date.getDate() + "." + this.date.getMonth();
 };
 
 function Venue(v) {
@@ -95,7 +108,7 @@ function loadConcertData(data) {
 function renderConcerts(element, list) {
     element.empty();
     for (var i = 0; i < list.length; i++) {
-        element.append("<p>" + list[i].date + ": " + list[i].artist + ", " + list[i].venue.venue + ", " + list[i].city.city + "</p>");
+        element.append("<p>" + list[i].getDate() + ": " + list[i].artist + ", " + list[i].venue.venue + ", " + list[i].city.city + "</p>");
     };
 }
 
