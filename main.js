@@ -24,21 +24,22 @@ function City(c) {
 }
 
 function loadConcertData(data) {
-    var concertData = data.find("#content p");
-
     // get all contents as node objects
+    var concertData = data.find("#content p");
 
     // concertData = concertData.pop(concertData.lastIndexOf);
     var concertDataText = "";
-    var re = new RegExp("<br>", 'g');
 
     // convert content to string
     for (var i = 0; i < concertData.length - 3; i++) {
+        if (i > 0) {
+            concertDataText += "<br>\n";
+        }
         concertDataText += concertData[i].innerHTML;
     };
 
-
     // remove html line breaks
+    var re = new RegExp("<br>", 'g');
     concertDataText = concertDataText.replace(re, '')
 
     // separate each line into array item
