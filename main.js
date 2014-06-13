@@ -1,7 +1,51 @@
 var concerts = [];
 var venues = [];
-var cities = [];
 var concertNode;
+var cities = [
+    "aarau",
+    "basel",
+    "bern",
+    "chiasso",
+    "chur",
+    "crans-près-céligny",
+    "düdingen",
+    "feldkirch",
+    "nyon",
+    "frauenfeld",
+    "freiburg i. b.",
+    "fribourg",
+    "gallen",
+    "genf",
+    "horgen",
+    "langenthal",
+    "lausanne",
+    "le locle",
+    "lugano",
+    "luzern",
+    "lörrach",
+    "martigny",
+    "monthey",
+    "montreux",
+    "münchenstein",
+    "neuchâtel",
+    "nyon",
+    "olten",
+    "panik",
+    "pratteln",
+    "rorschach",
+    "brugg",
+    "schaffhausen",
+    "sion",
+    "solothurn",
+    "strasbourg",
+    "thun",
+    "vevey",
+    "winterthur",
+    "wohlen",
+    "yverdon",
+    "zug",
+    "zürich"
+]
 
 // Concert class
 function Concert(d, a, v, c, f) {
@@ -39,9 +83,13 @@ function Venue(v) {
 function City(c) {
     this.city = c;
 
-    if ($.inArray(this.city, cities) === -1) {
-        cities.push(this.city);
+    for (var i = 0; i < cities.length; i++) {
+        if (this.city.indexOf(cities[i]) > 1) {
+            this.city = cities[i];
+        }
     }
+
+    console.log(this.city);
 }
 
 function loadConcertData(data) {
@@ -94,7 +142,7 @@ function loadConcertData(data) {
             for (var j = 1; j < location.length - 1; j++) {
                 venue += " " + location[j];
             }
-            city = location[location.length - 1].replace(/(<([^>]+)>)/ig,"");
+            city = concertData[i];
         }
 
         concerts.push(new Concert(date, artist, venue, city, isFestival));
