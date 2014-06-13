@@ -11,6 +11,9 @@ function Concert(d, a, v, c, f) {
     this.city = new City(c);
     this.isFestival = f;
 }
+Concert.prototype.render = function(){
+    return "";
+};
 
 function Venue(v) {
     this.venue = v;
@@ -84,14 +87,38 @@ function loadConcertData(data) {
         concerts.push(new Concert(date, artist, venue, city, isFestival));
         venue = "";
     };
-
-    renderConcerts(concertNode);
+    data.remove();
+    // renderConcerts(concertNode, concerts);
+    renderCities();
 }
 
-function renderConcerts(element) {
-    for (var i = 0; i < concerts.length; i++) {
-        element.append("<p>" + concerts[i].date + ": " + concerts[i].artist + ", " + concerts[i].venue.venue + ", " + concerts[i].city.city + "</p>");
+function renderConcerts(element, list) {
+    element.empty();
+    for (var i = 0; i < list.length; i++) {
+        element.append("<p>" + list[i].date + ": " + list[i].artist + ", " + list[i].venue.venue + ", " + list[i].city.city + "</p>");
     };
+}
+
+function renderCities() {
+    cities.sort();
+    for (var i = 0; i < cities.length; i++) {
+        $('#cities').append("<a href=#"+cities[i]+" class='city-filter'>"+cities[i]+"</a>");
+    }
+
+    $('.city-filter').on('click', function(){
+        var city = $(this).text();
+        renderConcerts($("#concerts"), getConcertsCityQuery(city));
+    })
+}
+
+function getConcertsCityQuery(city) {
+    var query = [];
+    for (var i = 0; i < concerts.length; i++) {
+        if (concerts[i].city.city === city) {
+            query.push(concerts[i]);
+        }
+    }
+    return query;
 }
 
 $(document).ready(function(){
