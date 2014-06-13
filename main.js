@@ -50,7 +50,7 @@ function loadConcertData(data) {
         concertData[i] = concertData[i].trim();
 
         var date;
-        var dateRange = concertData[i].split(" ")[0]
+        var dateRange = concertData[i].substring(0, 11);
         var artist;
         var venue = "";
         var city;
