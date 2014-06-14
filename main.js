@@ -44,6 +44,20 @@ var cities = [
     "zug",
     "zürich"
 ]
+var monthNumbers = [
+    "01",
+    "02",
+    "03",
+    "04",
+    "05",
+    "06",
+    "07",
+    "08",
+    "09",
+    "10",
+    "11",
+    "12"
+];
 
 // Concert class
 function Concert(d, a, v, c, f) {
@@ -54,7 +68,7 @@ function Concert(d, a, v, c, f) {
     this.isFestival = f;
 
     if (!this.isFestival) {
-        this.date = new Date(2014, parseInt(d.split(".")[1]), parseInt(d.split(".")[0]));
+        this.date = new Date(2014, parseInt(d.split(".")[1]) - 1, parseInt(d.split(".")[0]));
     } else {
         var day = this.date.split('.')[0];
         var month = this.date.split("– ")[1].split(".")[0];
@@ -67,7 +81,7 @@ Concert.prototype.render = function(){
 };
 
 Concert.prototype.getDate = function(){
-    return this.date.getDate() + "." + this.date.getMonth();
+    return this.date.getDate() + "." + monthNumbers[this.date.getMonth()];
 };
 
 function Venue(v) {
