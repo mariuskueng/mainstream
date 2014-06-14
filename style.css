@@ -8,16 +8,12 @@ body {
     background: url("mainstream.png") center no-repeat;
 }
 
-#cities:after {
-    clear: both;
-}
-
 #cities ul {
     padding: 0;
 }
 
 #cities li{
-    float: left;
+    display: inline-block;
     list-style: none;
 }
 
@@ -28,5 +24,4 @@ body {
 
 #concerts {
     padding-top: 1em;
-    clear: both;
 }

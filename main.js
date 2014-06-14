@@ -189,7 +189,9 @@ function renderConcerts(element, list) {
 function renderCities() {
     var sortedCities = [];
     for(var key in cities) {
-        sortedCities[sortedCities.length] = key;
+        if (cities[key].length) { // only show cities which have concerts
+            sortedCities[sortedCities.length] = key;
+        }
     }
     sortedCities.sort();
 
