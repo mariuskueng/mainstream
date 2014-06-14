@@ -62,25 +62,31 @@ var monthNumbers = [
 // Concert class
 function Concert(d, a, v, c, f) {
     this.date = d;
+    this.endDate = null;
     this.artist = a;
     this.venue = new Venue(v);
     this.city = new City(c);
     this.isFestival = f;
 
     if (!this.isFestival) {
-        this.date = new Date(2014, parseInt(d.split(".")[1]) - 1, parseInt(d.split(".")[0]));
+        this.date = new Date(0, parseInt(d.split(".")[1]) - 1, parseInt(d.split(".")[0]));
     } else {
-        var day = this.date.split('.')[0];
-        var month = this.date.split("– ")[1].split(".")[0];
-        this.date = new Date(2014, month, day);
+        var startDay = this.date.split('.')[0];
+        var endDay = this.date.split("– ")[1].split(".")[0];
+        var month = this.date.split("– ")[1].split(".")[1];
+        this.date = new Date(0, month, startDay);
+        this.endDate = new Date(0, month, endDay)
     }
 }
 
-Concert.prototype.render = function(){
+Concert.prototype.render = function() {
     return "";
 };
 
-Concert.prototype.getDate = function(){
+Concert.prototype.getDate = function() {
+    if (this.isFestival) {
+        return this.date.getDate() + ". – " + this.endDate.getDate() + "." + monthNumbers[this.date.getMonth()];
+    }
     return this.date.getDate() + "." + monthNumbers[this.date.getMonth()];
 };
 
