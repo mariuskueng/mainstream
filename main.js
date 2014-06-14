@@ -130,6 +130,10 @@ function loadConcertData(data) {
     // separate each line into array item
     concertData = concertDataText.split("\n");
 
+    parseConcertData(concertData);
+}
+
+function parseConcertData(concertData) {
     var substringIndex = 0;
 
     for (var i = 0; i < concertData.length; i++) {
@@ -146,8 +150,9 @@ function loadConcertData(data) {
             substringIndex = 11;
             date = concertData[i].substring(0, substringIndex);
             venue = concertData[i].split("mit");
-            venue = venue[0].substring(substringIndex, venue[0].length)
+            venue = venue[0].substring(substringIndex, venue[0].length).trim();
             artist = concertData[i].substring(date.length + venue.length, concertData[i].length).replace("mit ", "");
+            city = concertData[i];
             isFestival = true;
         } else { // is single concert
             substringIndex = 5;
@@ -163,10 +168,8 @@ function loadConcertData(data) {
 
         concerts.push(new Concert(date, artist, venue, city, isFestival));
         venue = "";
-    };
+    }
     data.remove();
-    // renderConcerts(concertNode, concerts);
-    renderCities();
 }
 
 function renderConcerts(element, list) {
@@ -216,10 +219,12 @@ function setActiveCity(city) {
 $(document).ready(function(){
     concertNode = $("#concerts");
     loadConcertData($("#data"));
+    renderCities();
 
     // concertNode.html("");
     // $.get("http://mainstream.radiox.ch/konzerte", function(data){
     //     loadConcertData($(data));
+    //     renderCities();
     // });
 
 });
