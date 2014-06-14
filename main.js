@@ -1,49 +1,50 @@
 var concerts = [];
 var venues = [];
 var concertNode;
-var cities = [
-    "aarau",
-    "basel",
-    "bern",
-    "chiasso",
-    "chur",
-    "crans-près-céligny",
-    "düdingen",
-    "feldkirch",
-    "frauenfeld",
-    "freiburg i. b.",
-    "fribourg",
-    "st. gallen",
-    "genf",
-    "horgen",
-    "langenthal",
-    "lausanne",
-    "le locle",
-    "lugano",
-    "luzern",
-    "lörrach",
-    "martigny",
-    "monthey",
-    "montreux",
-    "münchenstein",
-    "neuchâtel",
-    "nyon",
-    "olten",
-    "pratteln",
-    "rorschach",
-    "brugg",
-    "schaffhausen",
-    "sion",
-    "solothurn",
-    "strasbourg",
-    "thun",
-    "vevey",
-    "winterthur",
-    "wohlen",
-    "yverdon",
-    "zug",
-    "zürich"
-]
+var cities = {
+    "aarau": [],
+    "basel": [],
+    "bern": [],
+    "chiasso": [],
+    "chur": [],
+    "crans-près-céligny": [],
+    "düdingen": [],
+    "feldkirch": [],
+    "frauenfeld": [],
+    "freiburg i. b.": [],
+    "fribourg": [],
+    "st. gallen": [],
+    "genf": [],
+    "horgen": [],
+    "langenthal": [],
+    "lausanne": [],
+    "le locle": [],
+    "lugano": [],
+    "luzern": [],
+    "lörrach": [],
+    "martigny": [],
+    "monthey": [],
+    "montreux": [],
+    "münchenstein": [],
+    "neuchâtel": [],
+    "nyon": [],
+    "olten": [],
+    "pratteln": [],
+    "rorschach": [],
+    "brugg": [],
+    "schaffhausen": [],
+    "sion": [],
+    "solothurn": [],
+    "strasbourg": [],
+    "thun": [],
+    "vevey": [],
+    "winterthur": [],
+    "wohlen": [],
+    "yverdon": [],
+    "zug": [],
+    "zürich" : []
+};
+
 var monthNumbers = [
     "01",
     "02",
@@ -99,11 +100,12 @@ function Venue(v) {
 }
 
 function City(c) {
-    this.city = c;
+    this.concertText = c;
+    this.city = null;
 
-    for (var i = 0; i < cities.length; i++) {
-        if (this.city.indexOf(cities[i]) > 1) {
-            this.city = cities[i];
+    for (var city in cities) {
+        if (this.concertText.indexOf(city) > 1) {
+            this.city = city;
         }
     }
 }
@@ -166,7 +168,12 @@ function parseConcertData(concertData) {
             city = concertData[i];
         }
 
-        concerts.push(new Concert(date, artist, venue, city, isFestival));
+        var concert = new Concert(date, artist, venue, city, isFestival);
+
+        if (cities[concert.city.city]) {
+            cities[concert.city.city].push(concert);
+        }
+
         venue = "";
     }
     data.remove();
@@ -180,9 +187,14 @@ function renderConcerts(element, list) {
 }
 
 function renderCities() {
-    cities.sort();
-    for (var i = 0; i < cities.length; i++) {
-        $('#cities ul').append("<li><a href=#"+cities[i]+">"+cities[i]+"</a></li>");
+    var sortedCities = [];
+    for(var key in cities) {
+        sortedCities[sortedCities.length] = key;
+    }
+    sortedCities.sort();
+
+    for (var i = 0; i < sortedCities.length; i++) {
+        $('#cities ul').append("<li><a href=#"+sortedCities[i]+">"+sortedCities[i]+"</a></li>");
     }
 
     $('#cities li a').on('click', function(){
@@ -195,13 +207,20 @@ function renderCities() {
 function getConcertsCityQuery(city) {
     var query = [];
 
-    if(city === "alle") return concerts;
-
-    for (var i = 0; i < concerts.length; i++) {
-        if (concerts[i].city.city === city) {
-            query.push(concerts[i]);
+    if(city === "alle") {
+        for (var city in cities) {
+            for (var i = 0; i < cities[city].length; i++) {
+                query.push(cities[city][i]);
+            }
+        }
+    } else {
+        for (var i = 0; i < cities[city].length; i++) {
+            if (cities[city][i].city.city === city) {
+                query.push(cities[city][i]);
+            }
         }
     }
+
     return query;
 }
 
