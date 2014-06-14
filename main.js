@@ -238,14 +238,12 @@ function setActiveCity(city) {
 }
 
 $(document).ready(function(){
-    concertNode = $("#concerts");
-    loadConcertData($("#data"));
-    renderCities();
+    // loadConcertData($("#data"));
+    // renderCities();
 
-    // concertNode.html("");
-    // $.get("http://mainstream.radiox.ch/konzerte", function(data){
-    //     loadConcertData($(data));
-    //     renderCities();
-    // });
-
+    $("#concerts").empty();
+    $.get("http://mainstream.radiox.ch/konzerte", function(data){
+        loadConcertData($(data));
+        renderCities();
+    });
 });

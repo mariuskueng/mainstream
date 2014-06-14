@@ -25,3 +25,7 @@ body {
 #concerts {
     padding-top: 1em;
 }
+
+#data {
+    display: none;
+}
