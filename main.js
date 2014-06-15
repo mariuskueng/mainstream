@@ -158,7 +158,6 @@ function parseConcertData(concertData) {
 
         venue = "";
     }
-    data.remove();
 }
 
 function renderConcerts(element, list) {
