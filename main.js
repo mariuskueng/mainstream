@@ -155,6 +155,7 @@ function parseConcertData(concertData) {
         if (cities[concert.city.city]) {
             cities[concert.city.city].push(concert);
         }
+        concerts.push(concert);
 
         venue = "";
     }
@@ -188,23 +189,11 @@ function renderCities() {
 }
 
 function getConcertsCityQuery(city) {
-    var query = [];
-
     if(city === "alle") {
-        for (var city in cities) {
-            for (var i = 0; i < cities[city].length; i++) {
-                query.push(cities[city][i]);
-            }
-        }
+        return concerts;
     } else {
-        for (var i = 0; i < cities[city].length; i++) {
-            if (cities[city][i].city.city === city) {
-                query.push(cities[city][i]);
-            }
-        }
+        return cities[city];
     }
-
-    return query;
 }
 
 function setActiveCity(city) {
@@ -231,7 +220,7 @@ function kimonoCallback(data) {
     loadConcertData(concertData);
     renderCities();
     setLastModifiedText(data.results.konzerte[data.results.konzerte.length - 1].data.text);
-  }
+}
 
 $(document).ready(function(){
     $("#concerts").empty();
