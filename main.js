@@ -1,3 +1,4 @@
+var urlCityHash = "";
 var concerts = [];
 var venues = [];
 var concertNode;
@@ -155,12 +156,14 @@ function parseConcertData(concertData) {
         if (cities[concert.city.city]) {
             cities[concert.city.city].push(concert);
         }
+        concerts.push(concert);
 
         venue = "";
     }
 }
 
-function renderConcerts(element, list) {
+function renderConcerts(list) {
+    var element = $("#concerts");
     element.empty();
     for (var i = 0; i < list.length; i++) {
         element.append("<p>" + list[i].getDate() + ": <strong>" + list[i].artist + "</strong>, " + list[i].venue.venue + ", " + list[i].city.city + "</p>");
@@ -182,29 +185,17 @@ function renderCities() {
 
     $('#cities li a').on('click', function(){
         var city = $(this).text();
-        renderConcerts($("#concerts"), getConcertsCityQuery(city));
+        renderConcerts(getConcertsCityQuery(city));
         setActiveCity(city);
     })
 }
 
 function getConcertsCityQuery(city) {
-    var query = [];
-
     if(city === "alle") {
-        for (var city in cities) {
-            for (var i = 0; i < cities[city].length; i++) {
-                query.push(cities[city][i]);
-            }
-        }
+        return concerts;
     } else {
-        for (var i = 0; i < cities[city].length; i++) {
-            if (cities[city][i].city.city === city) {
-                query.push(cities[city][i]);
-            }
-        }
+        return cities[city];
     }
-
-    return query;
 }
 
 function setActiveCity(city) {
@@ -223,7 +214,17 @@ function setLastModifiedText(text) {
     $(".last-modified").text("Daten zuletzt " + text);
 }
 
+function renderFromCityHash() {
+    var city = decodeURIComponent(urlCityHash);
+    renderConcerts(getConcertsCityQuery(city));
+    setActiveCity(city);
+}
+
 function kimonoCallback(data) {
+    init(data);
+}
+
+function init(data) {
     var concertData = "";
     for (var i = 0; i < data.results.konzerte.length - 3; i++) {
         concertData += data.results.konzerte[i].data.text
@@ -231,7 +232,11 @@ function kimonoCallback(data) {
     loadConcertData(concertData);
     renderCities();
     setLastModifiedText(data.results.konzerte[data.results.konzerte.length - 1].data.text);
-  }
+
+    if (urlCityHash) {
+        renderFromCityHash();
+    }
+}
 
 $(document).ready(function(){
     $("#concerts").empty();
@@ -240,4 +245,5 @@ $(document).ready(function(){
         "crossDomain":true,
         "dataType":"jsonp"
     });
+    urlCityHash = document.location.hash.split("#")[1];
 });
