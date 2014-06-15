@@ -8,6 +8,11 @@ body {
     background: url("mainstream.png") center no-repeat;
 }
 
+.last-modified {
+    margin: 0;
+    font-size: 0.8em;
+}
+
 #cities ul {
     padding: 0;
 }

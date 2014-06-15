@@ -158,7 +158,6 @@ function parseConcertData(concertData) {
 
         venue = "";
     }
-    data.remove();
 }
 
 function renderConcerts(element, list) {
@@ -219,14 +218,26 @@ function setActiveCity(city) {
     };
 }
 
+function setLastModifiedText(text) {
+    var text = text.trim().replace("»", "");
+    $(".last-modified").text("Daten zuletzt " + text);
+}
+
+function kimonoCallback(data) {
+    var concertData = "";
+    for (var i = 0; i < data.results.konzerte.length - 3; i++) {
+        concertData += data.results.konzerte[i].data.text
+    }
+    loadConcertData(concertData);
+    renderCities();
+    setLastModifiedText(data.results.konzerte[data.results.konzerte.length - 1].data.text);
+  }
+
 $(document).ready(function(){
     $("#concerts").empty();
-    $.getJSON("http://www.kimonolabs.com/api/9pcb6qu6?apikey=94174d4d6c775c2eb6154db4ab889563", function(data) {
-        var concertData = "";
-        for (var i = 0; i < data.results.konzerte.length - 3; i++) {
-            concertData += data.results.konzerte[i].data.text
-        }
-        loadConcertData(concertData);
-        renderCities();
+    $.ajax({
+        "url":"http://www.kimonolabs.com/api/9pcb6qu6?apikey=94174d4d6c775c2eb6154db4ab889563&callback=kimonoCallback",
+        "crossDomain":true,
+        "dataType":"jsonp"
     });
 });
