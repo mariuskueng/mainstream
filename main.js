@@ -111,26 +111,8 @@ function City(c) {
 }
 
 function loadConcertData(data) {
-    // get all contents as node objects
-    var concertData = data.find("#content p");
-
-    // concertData = concertData.pop(concertData.lastIndexOf);
-    var concertDataText = "";
-
-    // convert content to string
-    for (var i = 0; i < concertData.length - 3; i++) {
-        if (i > 0) {
-            concertDataText += "<br>\n";
-        }
-        concertDataText += concertData[i].innerHTML;
-    };
-
-    // remove html line breaks
-    var re = new RegExp("<br>", 'g');
-    concertDataText = concertDataText.replace(re, '');
-
     // separate each line into array item
-    concertData = concertDataText.split("\n");
+    var concertData = data.split("\n");
 
     parseConcertData(concertData);
 }
@@ -238,12 +220,13 @@ function setActiveCity(city) {
 }
 
 $(document).ready(function(){
-    // loadConcertData($("#data"));
-    // renderCities();
-
     $("#concerts").empty();
-    $.get("http://mainstream.radiox.ch/konzerte", function(data){
-        loadConcertData($(data));
+    $.getJSON("http://www.kimonolabs.com/api/9pcb6qu6?apikey=94174d4d6c775c2eb6154db4ab889563", function(data) {
+        var concertData = "";
+        for (var i = 0; i < data.results.konzerte.length - 3; i++) {
+            concertData += data.results.konzerte[i].data.text
+        }
+        loadConcertData(concertData);
         renderCities();
     });
 });
