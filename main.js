@@ -219,6 +219,11 @@ function setActiveCity(city) {
     };
 }
 
+function setLastModifiedText(text) {
+    var text = text.trim().replace("»", "");
+    $(".last-modified").text("Daten zuletzt " + text);
+}
+
 function kimonoCallback(data) {
     var concertData = "";
     for (var i = 0; i < data.results.konzerte.length - 3; i++) {
@@ -226,6 +231,7 @@ function kimonoCallback(data) {
     }
     loadConcertData(concertData);
     renderCities();
+    setLastModifiedText(data.results.konzerte[data.results.konzerte.length - 1].data.text);
   }
 
 $(document).ready(function(){
