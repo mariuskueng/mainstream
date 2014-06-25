@@ -1,5 +1,6 @@
 body {
     font: lighter 1em "Helvetica Neue";
+    -webkit-font-smoothing: antialiased;
 }
 
 .header {
@@ -33,4 +34,18 @@ body {
 
 #data {
     display: none;
+}
+
+@media(max-width: 480px) {
+    body {
+        margin: 15px auto;
+        width: 90%;
+    }
+    h1, h2 {
+        font-size: 1.2em;
+    }
+    .header {
+        background: none;
+        height: auto;
+    }
 }
