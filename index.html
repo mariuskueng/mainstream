@@ -4,11 +4,15 @@
     <title>Konzerte | Mainstream</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" type="text/css" href="style.css">
+    <link rel="stylesheet" type="text/css" href="lib/pickadate.js-3.5.3/lib/compressed/themes/default.css">
+    <link rel="stylesheet" type="text/css" href="lib/pickadate.js-3.5.3/lib/compressed/themes/default.date.css">
 </head>
 <body>
     <div class="header">
         <h1>Konzerte | Mainstream</h1>
         <p class="last-modified"></p>
+        <input type="text" class="datepicker">
+
     </div>
     <div id="cities">
         <h2>Städte</h2>
@@ -17,7 +21,10 @@
         </ul>
     </div>
     <div id="concerts"></div>
-    <script type="text/javascript" src="jquery-1.11.1.min.js"></script>
+    <script type="text/javascript" src="lib/jquery-1.11.1.min.js"></script>
+    <script type="text/javascript" src="lib/pickadate.js-3.5.3/lib/compressed/picker.js"></script>
+    <script type="text/javascript" src="lib/pickadate.js-3.5.3/lib/compressed/picker.date.js"></script>
+    <script type="text/javascript" src="lib/pickadate.js-3.5.3/lib/compressed/translations/de_DE.js"></script>
     <script type="text/javascript" src="main.js"></script>
 </body>
 </html>

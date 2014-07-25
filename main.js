@@ -43,8 +43,26 @@ var cities = {
     "wohlen": [],
     "yverdon": [],
     "zug": [],
-    "zürich" : []
+    "zürich" : [],
+    "riehen": [],
+    "belfort": [],
+    "zofingen": [],
+    "wetzikon": [],
+    "colmar": [],
+    "wil": [],
+    "muri": [],
+    "pully": [],
+    "orpund": [],
+    "eggersriet": [],
+    "begnins": [],
+    "mulhouse": []
 };
+
+var cityTypoLookUp = {
+    "el lokal" : "zürich",
+    "luzeern": "luzern",
+    "gurten": "bern"
+}
 
 var monthNumbers = [
     "01",
@@ -70,14 +88,21 @@ function Concert(d, a, v, c, f) {
     this.city = new City(c);
     this.isFestival = f;
 
+    var currentDate = new Date();
+    var year = currentDate.getFullYear();
+
+    if (this.date.split(".")[1] < currentDate.getMonth() + 1) {
+        year = year + 1;
+    }
+
     if (!this.isFestival) {
-        this.date = new Date(0, parseInt(d.split(".")[1]) - 1, parseInt(d.split(".")[0]));
+        this.date = new Date(year, parseInt(d.split(".")[1]) - 1, parseInt(d.split(".")[0]));
     } else {
         var startDay = this.date.split('.')[0];
         var endDay = this.date.split("– ")[1].split(".")[0];
         var month = this.date.split("– ")[1].split(".")[1];
-        this.date = new Date(0, month, startDay);
-        this.endDate = new Date(0, month, endDay)
+        this.date = new Date(year, month, startDay);
+        this.endDate = new Date(year, month, endDay)
     }
 }
 
@@ -87,9 +112,9 @@ Concert.prototype.render = function() {
 
 Concert.prototype.getDate = function() {
     if (this.isFestival) {
-        return this.date.getDate() + ". – " + this.endDate.getDate() + "." + monthNumbers[this.date.getMonth()];
+        return ("0" + this.date.getDate()).slice(-2) + ". – " + ("0" + this.endDate.getDate()).slice(-2) + "." + monthNumbers[this.date.getMonth()];
     }
-    return this.date.getDate() + "." + monthNumbers[this.date.getMonth()];
+    return ("0" + this.date.getDate()).slice(-2) + "." + monthNumbers[this.date.getMonth()];
 };
 
 function Venue(v) {
@@ -109,6 +134,15 @@ function City(c) {
             this.city = city;
         }
     }
+
+    if (this.city == null) {
+        for (var city in cityTypoLookUp) {
+            if (this.concertText.indexOf(city) > 1) {
+                this.city = cityTypoLookUp[city];
+            }
+        }
+
+    }
 }
 
 function loadConcertData(data) {
@@ -124,12 +158,19 @@ function parseConcertData(concertData) {
     for (var i = 0; i < concertData.length; i++) {
         concertData[i] = concertData[i].trim();
 
+        if (!concertData[i]) continue;
+
         var date;
         var dateRange = concertData[i].substring(0, 11);
         var artist;
         var venue = "";
         var city;
         var isFestival = false;
+        var currentDate = new Date();
+        currentDate = currentDate.setHours(0);
+        currentDate = new Date(currentDate).setMinutes(0);
+        currentDate = new Date(currentDate).setSeconds(0);
+        currentDate = new Date(currentDate).setMilliseconds(0);
 
         if (dateRange.indexOf("–") > -1) { // is festival
             substringIndex = 11;
@@ -153,10 +194,12 @@ function parseConcertData(concertData) {
 
         var concert = new Concert(date, artist, venue, city, isFestival);
 
-        if (cities[concert.city.city]) {
-            cities[concert.city.city].push(concert);
+        if (currentDate - concert.date <= 0) {
+            if (cities[concert.city.city]) {
+                cities[concert.city.city].push(concert);
+            }
+            concerts.push(concert);
         }
-        concerts.push(concert);
 
         venue = "";
     }
@@ -227,7 +270,7 @@ function kimonoCallback(data) {
 function init(data) {
     var concertData = "";
     for (var i = 0; i < data.results.konzerte.length - 3; i++) {
-        concertData += data.results.konzerte[i].data.text
+        concertData += "\n" + data.results.konzerte[i].data.text
     }
     loadConcertData(concertData);
     renderCities();
@@ -236,6 +279,21 @@ function init(data) {
     if (urlCityHash) {
         renderFromCityHash();
     }
+
+    // The date picker (read the docs)
+    var $input = $('.datepicker').pickadate();
+    var picker = $input.pickadate('picker');
+    var pickedDate;
+    picker.on('close', function(){
+        pickedDate = new Date(picker.component.item.select.pick);
+        concertsOnDate = [];
+        for (var i = 0; i < concerts.length; i++) {
+            if (pickedDate - concerts[i].date == 0) {
+                concertsOnDate.push(concerts[i]);
+            }
+        }
+        renderConcerts(concertsOnDate);
+    });
 }
 
 $(document).ready(function(){
