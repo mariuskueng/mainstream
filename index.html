@@ -2,15 +2,20 @@
 <head>
     <meta http-equiv="content-type" content="text/html; charset=utf-8">
     <title>Konzerte | Mainstream</title>
+    <meta name="author" content="Marius K&uuml;ng">
+    <meta name="description" content="Indie &amp; Electronica Konzerte in der Schweiz.">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="shortcut icon" href="favicon.png">
+    <link rel="apple-touch-icon" href="mainstream.png"/>
     <link rel="stylesheet" type="text/css" href="style.css">
     <link rel="stylesheet" type="text/css" href="lib/pickadate.js-3.5.3/lib/compressed/themes/default.css">
     <link rel="stylesheet" type="text/css" href="lib/pickadate.js-3.5.3/lib/compressed/themes/default.date.css">
 </head>
 <body>
     <div class="header">
-        <h1>Konzerte | Mainstream</h1>
+        <h1><a href="./">Konzerte | Mainstream</a></h1>
         <p class="last-modified"></p>
+        <label class="lbl-datepicker">Nach Datum suchen:</label>
         <input type="text" class="datepicker">
 
     </div>
@@ -21,6 +26,11 @@
         </ul>
     </div>
     <div id="concerts"></div>
+
+    <div id="disclaimer">
+        Alle Konzerte entstammen folgender Konzertliste: <a href="http://mainstream.radiox.ch/konzerte">http://mainstream.radiox.ch/konzerte</a>
+    </div>
+
     <script type="text/javascript" src="lib/jquery-1.11.1.min.js"></script>
     <script type="text/javascript" src="lib/pickadate.js-3.5.3/lib/compressed/picker.js"></script>
     <script type="text/javascript" src="lib/pickadate.js-3.5.3/lib/compressed/picker.date.js"></script>

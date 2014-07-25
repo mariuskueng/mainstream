@@ -100,9 +100,10 @@ function Concert(d, a, v, c, f) {
     } else {
         var startDay = this.date.split('.')[0];
         var endDay = this.date.split("– ")[1].split(".")[0];
-        var month = this.date.split("– ")[1].split(".")[1];
+        var month = parseInt(this.date.split("– ")[1].split(".")[1]) - 1;
+
         this.date = new Date(year, month, startDay);
-        this.endDate = new Date(year, month, endDay)
+        this.endDate = new Date(year, month, endDay);
     }
 }
 
@@ -243,11 +244,11 @@ function getConcertsCityQuery(city) {
 
 function setActiveCity(city) {
     var cities = $('#cities li a');
-    cities.css("font-weight", "lighter");
+    cities.removeClass("selected");
 
     for (var i = 0; i < cities.length; i++) {
         if (city === $(cities[i]).text()) {
-            $(cities[i]).css("font-weight", "bold");
+            $(cities[i]).addClass("selected");
         }
     };
 }
@@ -281,7 +282,10 @@ function init(data) {
     }
 
     // The date picker (read the docs)
-    var $input = $('.datepicker').pickadate();
+    var $input = $('.datepicker').pickadate({
+        min:true,
+        max:concerts[concerts.length - 1].date
+    });
     var picker = $input.pickadate('picker');
     var pickedDate;
     picker.on('close', function(){
