@@ -244,11 +244,11 @@ function getConcertsCityQuery(city) {
 
 function setActiveCity(city) {
     var cities = $('#cities li a');
-    cities.css("font-weight", "lighter");
+    cities.removeClass("selected");
 
     for (var i = 0; i < cities.length; i++) {
         if (city === $(cities[i]).text()) {
-            $(cities[i]).css("font-weight", "bold");
+            $(cities[i]).addClass("selected");
         }
     };
 }
