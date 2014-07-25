@@ -43,8 +43,26 @@ var cities = {
     "wohlen": [],
     "yverdon": [],
     "zug": [],
-    "zürich" : []
+    "zürich" : [],
+    "riehen": [],
+    "belfort": [],
+    "zofingen": [],
+    "wetzikon": [],
+    "colmar": [],
+    "wil": [],
+    "muri": [],
+    "pully": [],
+    "orpund": [],
+    "eggersriet": [],
+    "begnins": [],
+    "mulhouse": []
 };
+
+var cityTypoLookUp = {
+    "el lokal" : "zürich",
+    "luzeern": "luzern",
+    "gurten": "bern"
+}
 
 var monthNumbers = [
     "01",
@@ -115,6 +133,15 @@ function City(c) {
         if (this.concertText.indexOf(city) > 1) {
             this.city = city;
         }
+    }
+
+    if (this.city == null) {
+        for (var city in cityTypoLookUp) {
+            if (this.concertText.indexOf(city) > 1) {
+                this.city = cityTypoLookUp[city];
+            }
+        }
+
     }
 }
 
