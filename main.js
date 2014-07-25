@@ -87,9 +87,9 @@ Concert.prototype.render = function() {
 
 Concert.prototype.getDate = function() {
     if (this.isFestival) {
-        return this.date.getDate() + ". – " + this.endDate.getDate() + "." + monthNumbers[this.date.getMonth()];
+        return ("0" + this.date.getDate()).slice(-2) + ". – " + ("0" + this.endDate.getDate()).slice(-2) + "." + monthNumbers[this.date.getMonth()];
     }
-    return this.date.getDate() + "." + monthNumbers[this.date.getMonth()];
+    return ("0" + this.date.getDate()).slice(-2) + "." + monthNumbers[this.date.getMonth()];
 };
 
 function Venue(v) {
