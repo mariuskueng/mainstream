@@ -124,6 +124,8 @@ function parseConcertData(concertData) {
     for (var i = 0; i < concertData.length; i++) {
         concertData[i] = concertData[i].trim();
 
+        if (!concertData[i]) continue;
+
         var date;
         var dateRange = concertData[i].substring(0, 11);
         var artist;
@@ -227,7 +229,7 @@ function kimonoCallback(data) {
 function init(data) {
     var concertData = "";
     for (var i = 0; i < data.results.konzerte.length - 3; i++) {
-        concertData += data.results.konzerte[i].data.text
+        concertData += "\n" + data.results.konzerte[i].data.text
     }
     loadConcertData(concertData);
     renderCities();
