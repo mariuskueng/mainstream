@@ -1,5 +1,6 @@
 body {
-    font: lighter 1em "Helvetica Neue";
+    font: 400 1em "Helvetica Neue", "Arial" sans-serif;
+    letter-spacing: 0.5px;
     -webkit-font-smoothing: antialiased;
     width: 60%;
     margin: 10px auto;
@@ -10,18 +11,21 @@ h1 a {
     text-decoration: none;
 }
 
+h2 {
+    margin-top: 50px;
+}
+
 .header {
-    height: 150px;
+    height: 100px;
     width: 100%;
 }
 
 .last-modified {
     margin: 0 0 20px 0;
-    font-size: 0.8em;
 }
 
-.lbl-datepicker {
-
+.city-select {
+    display: none;
 }
 
 #cities ul {
@@ -46,12 +50,13 @@ h1 a {
     background-color: #0089ec;
 }
 
-#concerts {
-    padding-top: 1em;
-}
-
 #data {
     display: none;
+}
+
+#disclaimer {
+    font-size: 0.8em;
+    margin-top: 75px;
 }
 
 @media(max-width: 480px) {
@@ -66,10 +71,10 @@ h1 a {
         background: none;
         height: auto;
     }
-    #cities {
-        width: 100%;
+    #cities ul {
+        display: none;
     }
-    #cities li a {
-        font-size: 1.3em;
+    .city-select {
+        display: block;
     }
 }

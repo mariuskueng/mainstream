@@ -14,20 +14,24 @@
 <body>
     <div class="header">
         <h1><a href="./">Konzerte | Mainstream</a></h1>
-        <p class="last-modified"></p>
-        <label class="lbl-datepicker">Nach Datum suchen:</label>
-        <input type="text" class="datepicker">
+        <input type="text" class="datepicker" placeholder="Nach Datum suchen:">
 
     </div>
     <div id="cities">
         <h2>Städte</h2>
+        <select class="city-select">
+            <option value="alle">Alle</option>
+            <option disabled>──────────</option>
+        </select>
         <ul>
             <li><a href="#alle">alle</a></li>
         </ul>
     </div>
+    <h2>Konzerte</h2>
     <div id="concerts"></div>
 
     <div id="disclaimer">
+        <p class="last-modified"></p>
         Alle Konzerte entstammen folgender Konzertliste: <a href="http://mainstream.radiox.ch/konzerte">http://mainstream.radiox.ch/konzerte</a>
     </div>
 

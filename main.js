@@ -178,7 +178,7 @@ function parseConcertData(concertData) {
             date = concertData[i].substring(0, substringIndex);
             venue = concertData[i].split("mit");
             venue = venue[0].substring(substringIndex, venue[0].length).trim();
-            artist = concertData[i].substring(date.length + venue.length, concertData[i].length).replace("mit ", "");
+            artist = concertData[i].substring(date.length + venue.length + 1, concertData[i].length).replace("mit ", "");
             city = concertData[i];
             isFestival = true;
         } else { // is single concert
@@ -225,13 +225,20 @@ function renderCities() {
 
     for (var i = 0; i < sortedCities.length; i++) {
         $('#cities ul').append("<li><a href=#"+sortedCities[i]+">"+sortedCities[i]+"</a></li>");
+        $('.city-select').append("<option value='"+sortedCities[i]+"' >"+sortedCities[i]+"</option>");
     }
 
     $('#cities li a').on('click', function(){
         var city = $(this).text();
         renderConcerts(getConcertsCityQuery(city));
         setActiveCity(city);
-    })
+    });
+
+    $('.city-select').on('change', function() {
+        var city = $(this).val();
+        renderConcerts(getConcertsCityQuery(city));
+        setActiveCity(city);
+    });
 }
 
 function getConcertsCityQuery(city) {
@@ -250,7 +257,8 @@ function setActiveCity(city) {
         if (city === $(cities[i]).text()) {
             $(cities[i]).addClass("selected");
         }
-    };
+    }
+    $(".city-select").val(city);
 }
 
 function setLastModifiedText(text) {
@@ -279,6 +287,8 @@ function init(data) {
 
     if (urlCityHash) {
         renderFromCityHash();
+    } else {
+        renderConcerts(getConcertsCityQuery("alle"));
     }
 
     // The date picker (read the docs)
