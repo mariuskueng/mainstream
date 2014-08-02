@@ -90,8 +90,9 @@ function Concert(d, a, v, c, f) {
 
     var currentDate = new Date();
     var year = currentDate.getFullYear();
+    var concertMonth = parseInt(this.date.split(".")[1]);
 
-    if (this.date.split(".")[1] < currentDate.getMonth() + 1) {
+    if (concertMonth < currentDate.getMonth()) {
         year = year + 1;
     }
 
@@ -167,11 +168,14 @@ function parseConcertData(concertData) {
         var venue = "";
         var city;
         var isFestival = false;
+
+        // reset time to check todays concerts
         var currentDate = new Date();
         currentDate = currentDate.setHours(0);
         currentDate = new Date(currentDate).setMinutes(0);
         currentDate = new Date(currentDate).setSeconds(0);
         currentDate = new Date(currentDate).setMilliseconds(0);
+        currentDate = new Date(currentDate);
 
         if (dateRange.indexOf("–") > -1) { // is festival
             substringIndex = 11;
@@ -195,7 +199,7 @@ function parseConcertData(concertData) {
 
         var concert = new Concert(date, artist, venue, city, isFestival);
 
-        if (currentDate - concert.date <= 0) {
+        if (concert.date >= currentDate) {
             if (cities[concert.city.city]) {
                 cities[concert.city.city].push(concert);
             }
