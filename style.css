@@ -2,12 +2,16 @@ body {
     font: 400 1em "Helvetica Neue", "Arial" sans-serif;
     letter-spacing: 0.5px;
     -webkit-font-smoothing: antialiased;
-    width: 60%;
-    margin: 10px auto;
+    margin: 0;
+    width: 100%;
+}
+
+h1 {
+    margin: 0;
 }
 
 h1 a {
-    color: #000;
+    color: #FFF;
     text-decoration: none;
 }
 
@@ -15,9 +19,16 @@ h2 {
     margin-top: 50px;
 }
 
-.header {
-    height: 100px;
+header {
+    background-color: #000;
     width: 100%;
+    color: #FFF;
+}
+
+.header-content {
+    margin: 0 auto;
+    max-width: 960px;
+    padding: 50px 0;
 }
 
 .last-modified {
@@ -26,6 +37,12 @@ h2 {
 
 .city-select {
     display: none;
+}
+
+.datepicker {
+    margin-top: 20px;
+    padding: 7px 10px;
+    box-shadow: none;
 }
 
 #cities ul {
@@ -40,41 +57,84 @@ h2 {
 #cities li a {
     margin: 0.1em 0;
     padding: 0.1em 0.25em 0.2em;
-    color: #000;
+    color: #FFF;
     display: inline-block;
+    text-decoration: none;
 }
 
 #cities li a.selected {
-    color: #FFF;
+    color: #000;
     font-weight: bold;
-    background-color: #0089ec;
+    background-color: #FFF;
+}
+
+#content {
+    max-width: 960px;
+    margin: 0 auto;
 }
 
 #data {
     display: none;
 }
 
+footer {
+    background-color: #000;
+    color: #FFF;
+    width: 100%;
+}
+
 #disclaimer {
+    padding: 20px 0;
+    max-width: 960px;
+    margin: 75px auto 0;
     font-size: 0.8em;
-    margin-top: 75px;
+}
+
+#disclaimer a {
+    color: #FFF;
 }
 
 @media(max-width: 480px) {
     body {
-        margin: 15px auto;
-        width: 90%;
+        width: 100%;
     }
+
+    h1 {
+        float: none;
+    }
+
     h1, h2 {
         font-size: 1.2em;
     }
-    .header {
+
+    .header-content {
+        padding: 20px 0;
         background: none;
         height: auto;
+        margin: 0 20px;
     }
+
+    #content {
+        margin: 50px 20px;
+    }
+
     #cities ul {
         display: none;
     }
-    .city-select {
+
+    .city-select, .datepicker {
+        border: none;
+        border-radius: 0px;
+        padding: 10px;
+        width: 100%;
+        appearance: none;
+        -webkit-appearance: none;
+        margin: 20px 0 0;
+        background-color: #FFF;
         display: block;
+    }
+
+    #disclaimer {
+        margin: 0 20px;
     }
 }
