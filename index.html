@@ -12,28 +12,34 @@
     <link rel="stylesheet" type="text/css" href="lib/pickadate.js-3.5.3/lib/compressed/themes/default.date.css">
 </head>
 <body>
-    <div class="header">
-        <h1><a href="./">Konzerte | Mainstream</a></h1>
-        <input type="text" class="datepicker" placeholder="Nach Datum suchen:">
+    <header>
+        <div class="header-content">
+            <h1><a href="./">Konzerte | Mainstream</a></h1>
+            <input type="text" class="datepicker" placeholder="Nach Datum suchen:">
 
-    </div>
-    <div id="cities">
-        <h2>Städte</h2>
-        <select class="city-select">
-            <option value="alle">Alle</option>
-            <option disabled>──────────</option>
-        </select>
-        <ul>
-            <li><a href="#alle">alle</a></li>
-        </ul>
-    </div>
-    <h2>Konzerte</h2>
-    <div id="concerts"></div>
+            <div id="cities">
+                <h2>Städte</h2>
+                <select class="city-select">
+                    <option value="alle">Alle</option>
+                    <option disabled>──────────</option>
+                </select>
+                <ul>
+                    <li><a href="#alle">alle</a></li>
+                </ul>
+            </div>
+        </div>
+    </header>
+    <section id="content">
+        <h2>Konzerte</h2>
+        <div id="concerts"></div>
+    </section>
 
-    <div id="disclaimer">
-        <p class="last-modified"></p>
-        Alle Konzerte entstammen folgender Konzertliste: <a href="http://mainstream.radiox.ch/konzerte">http://mainstream.radiox.ch/konzerte</a>
-    </div>
+    <footer>
+        <div id="disclaimer">
+            <p class="last-modified"></p>
+            Alle Konzerte entstammen folgender Konzertliste: <a href="http://mainstream.radiox.ch/konzerte">http://mainstream.radiox.ch/konzerte</a>
+        </div>
+    </footer>
 
     <script type="text/javascript" src="lib/jquery-1.11.1.min.js"></script>
     <script type="text/javascript" src="lib/pickadate.js-3.5.3/lib/compressed/picker.js"></script>
