@@ -78,6 +78,14 @@ var monthNumbers = [
     "11",
     "12"
 ];
+// reset time to check todays concerts
+var currentDate = new Date();
+// remove Minutes & Seconds (concerts only have a date)
+currentDate = currentDate.setHours(0);
+currentDate = new Date(currentDate).setMinutes(0);
+currentDate = new Date(currentDate).setSeconds(0);
+currentDate = new Date(currentDate).setMilliseconds(0);
+currentDate = new Date(currentDate);
 
 // Concert class
 function Concert(d, a, v, c, f) {
@@ -169,14 +177,6 @@ function parseConcertData(concertData) {
         var city;
         var isFestival = false;
 
-        // reset time to check todays concerts
-        var currentDate = new Date();
-        currentDate = currentDate.setHours(0);
-        currentDate = new Date(currentDate).setMinutes(0);
-        currentDate = new Date(currentDate).setSeconds(0);
-        currentDate = new Date(currentDate).setMilliseconds(0);
-        currentDate = new Date(currentDate);
-
         if (dateRange.indexOf("–") > -1) { // is festival
             substringIndex = 11;
             date = concertData[i].substring(0, substringIndex);
@@ -199,7 +199,7 @@ function parseConcertData(concertData) {
 
         var concert = new Concert(date, artist, venue, city, isFestival);
 
-        if (concert.date >= currentDate) {
+        if (concert.date >= currentDate || concert.endDate >= currentDate) {
             if (cities[concert.city.city]) {
                 cities[concert.city.city].push(concert);
             }
@@ -263,6 +263,12 @@ function setActiveCity(city) {
         }
     }
     $(".city-select").val(city);
+    if (city === "alle") {
+        $("#content>h2").text("Alle Konzerte");
+    }  else {
+        $("#content>h2").text("Konzerte in " + city.charAt(0).toUpperCase() + city.slice(1));
+    }
+
 }
 
 function setLastModifiedText(text) {
