@@ -189,7 +189,11 @@ function parseConcertData(concertData) {
             substringIndex = 5;
             date = concertData[i].substring(0, substringIndex);
             artist = concertData[i].substring(substringIndex + 1, concertData[i].length).split(",")[0];
-            var location = concertData[i].substring(substringIndex + 1, concertData[i].length).split(",")[1].split(" ");
+
+            var location = concertData[i].substring(substringIndex + 1, concertData[i].length).split(",");
+            if (location.length > 1) {
+                location = location[1].split(" ");
+            }
 
             for (var j = 1; j < location.length - 1; j++) {
                 venue += " " + location[j];
