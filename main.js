@@ -1,91 +1,109 @@
-var urlCityHash = "";
-var concerts = [];
-var venues = [];
-var concertNode;
-var cities = {
-    "aarau": [],
-    "basel": [],
-    "bern": [],
-    "chiasso": [],
-    "chur": [],
-    "crans-près-céligny": [],
-    "düdingen": [],
-    "feldkirch": [],
-    "frauenfeld": [],
-    "freiburg i. b.": [],
-    "fribourg": [],
-    "st. gallen": [],
-    "genf": [],
-    "horgen": [],
-    "langenthal": [],
-    "lausanne": [],
-    "le locle": [],
-    "lugano": [],
-    "luzern": [],
-    "lörrach": [],
-    "martigny": [],
-    "monthey": [],
-    "montreux": [],
-    "münchenstein": [],
-    "neuchâtel": [],
-    "nyon": [],
-    "olten": [],
-    "pratteln": [],
-    "rorschach": [],
-    "brugg": [],
-    "schaffhausen": [],
-    "sion": [],
-    "solothurn": [],
-    "strasbourg": [],
-    "thun": [],
-    "vevey": [],
-    "winterthur": [],
-    "wohlen": [],
-    "yverdon": [],
-    "zug": [],
-    "zürich" : [],
-    "riehen": [],
-    "belfort": [],
-    "zofingen": [],
-    "wetzikon": [],
-    "colmar": [],
-    "wil": [],
-    "muri": [],
-    "pully": [],
-    "orpund": [],
-    "eggersriet": [],
-    "begnins": [],
-    "mulhouse": []
-};
+// App Mainstream
+function MAINSTREAM(){
 
-var cityTypoLookUp = {
-    "el lokal" : "zürich",
-    "luzeern": "luzern",
-    "gurten": "bern"
-}
+    // globals
+    var urlCityHash = "";
+    var concertNode;
+    var cityTypoLookUp = {
+        "el lokal" : "zürich",
+        "luzeern": "luzern",
+        "gurten": "bern"
+    }
+    this.currentDate = null;
+    var monthNumbers = [
+        "01",
+        "02",
+        "03",
+        "04",
+        "05",
+        "06",
+        "07",
+        "08",
+        "09",
+        "10",
+        "11",
+        "12"
+    ];
 
-var monthNumbers = [
-    "01",
-    "02",
-    "03",
-    "04",
-    "05",
-    "06",
-    "07",
-    "08",
-    "09",
-    "10",
-    "11",
-    "12"
-];
-// reset time to check todays concerts
-var currentDate = new Date();
-// remove Minutes & Seconds (concerts only have a date)
-currentDate = currentDate.setHours(0);
-currentDate = new Date(currentDate).setMinutes(0);
-currentDate = new Date(currentDate).setSeconds(0);
-currentDate = new Date(currentDate).setMilliseconds(0);
-currentDate = new Date(currentDate);
+    var cities = {
+        "aarau": [],
+        "basel": [],
+        "bern": [],
+        "chiasso": [],
+        "chur": [],
+        "crans-près-céligny": [],
+        "düdingen": [],
+        "feldkirch": [],
+        "frauenfeld": [],
+        "freiburg i. b.": [],
+        "fribourg": [],
+        "st. gallen": [],
+        "genf": [],
+        "horgen": [],
+        "langenthal": [],
+        "lausanne": [],
+        "le locle": [],
+        "lugano": [],
+        "luzern": [],
+        "lörrach": [],
+        "martigny": [],
+        "monthey": [],
+        "montreux": [],
+        "münchenstein": [],
+        "neuchâtel": [],
+        "nyon": [],
+        "olten": [],
+        "pratteln": [],
+        "rorschach": [],
+        "brugg": [],
+        "schaffhausen": [],
+        "sion": [],
+        "solothurn": [],
+        "strasbourg": [],
+        "thun": [],
+        "vevey": [],
+        "winterthur": [],
+        "wohlen": [],
+        "yverdon": [],
+        "zug": [],
+        "zürich" : [],
+        "riehen": [],
+        "belfort": [],
+        "zofingen": [],
+        "wetzikon": [],
+        "colmar": [],
+        "wil": [],
+        "muri": [],
+        "pully": [],
+        "orpund": [],
+        "eggersriet": [],
+        "begnins": [],
+        "mulhouse": []
+    };
+
+    // collections
+    var concerts = [];
+    var venues = [];
+
+    // methods
+    this.prototype.init = function(){
+
+    };
+
+    this.prototype.setCurrentDate = function (){
+        // reset time to check todays concerts
+        this.currentDate = new Date();
+        // remove Minutes & Seconds (concerts only have a date)
+        currentDate = currentDate.setHours(0);
+        currentDate = new Date(currentDate).setMinutes(0);
+        currentDate = new Date(currentDate).setSeconds(0);
+        currentDate = new Date(currentDate).setMilliseconds(0);
+        currentDate = new Date(currentDate);
+    };
+
+    this.prototype.getCurrentDate = function {
+        return this.currentDate;
+    };
 
 // Concert class
 function Concert(d, a, v, c, f) {
@@ -218,7 +236,7 @@ function renderConcerts(list) {
     var element = $("#concerts");
     element.empty();
     for (var i = 0; i < list.length; i++) {
-        element.append("<p>" + list[i].getDate() + ": <strong>" + list[i].artist + "</strong>, " + list[i].venue.venue + ", " + list[i].city.city + "</p>");
+        element.append("<p>" + list[i].getDate() + ". <strong>" + list[i].artist + "</strong>, " + list[i].venue.venue + ", " + list[i].city.city + "</p>");
     };
 }
 
