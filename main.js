@@ -2,6 +2,7 @@ var urlCityHash = "";
 var concerts = [];
 var venues = [];
 var concertNode;
+var localConcerts = JSON.parse(window.localStorage.concerts);
 var cities = {
     "aarau": [],
     "basel": [],
@@ -95,6 +96,7 @@ function Concert(d, a, v, c, f) {
     this.venue = new Venue(v);
     this.city = new City(c);
     this.isFestival = f;
+    this.favorited = false;
 
     var currentDate = new Date();
     var year = currentDate.getFullYear();
@@ -212,6 +214,8 @@ function parseConcertData(concertData) {
 
         venue = "";
     }
+
+    saveToLocalStorage("concerts", concerts);
 }
 
 function renderConcerts(list) {
@@ -284,6 +288,14 @@ function renderFromCityHash() {
     var city = decodeURIComponent(urlCityHash);
     renderConcerts(getConcertsCityQuery(city));
     setActiveCity(city);
+}
+
+function saveToLocalStorage(name, item) {
+    if(typeof(Storage) !== "undefined") {
+        localStorage.setItem(name, JSON.stringify(item));
+    } else {
+        // Sorry! No Web Storage support..
+    }
 }
 
 function kimonoCallback(data) {
