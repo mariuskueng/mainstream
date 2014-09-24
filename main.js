@@ -216,8 +216,23 @@ var MAINSTREAM = {
         var element = $("#concerts");
         element.empty();
         for (var i = 0; i < list.length; i++) {
-            element.append("<p>" + list[i].getDate() + ". <strong>" + list[i].artist + "</strong>, " + list[i].venue.venue + ", " + list[i].city.city + "</p>");
-        };
+            element.append(list[i].render());
+        }
+        $('.concert').on('click', function() {
+            $(this).children(".star").toggleClass('active');
+
+            // will sort this inefficency out
+            for (var i = 0; i < list.length; i++) {
+                if ($(this).data('uuid') === list[i].uuid) {
+                    if (!list[i].starred) {
+                        list[i].starred = true;
+                    } else {
+                        list[i].starred = false;
+                    }
+
+                }
+            }
+        });
     },
 
     renderCities: function() {
@@ -301,6 +316,7 @@ function Concert(d, a, v, c, f) {
     this.venue = new Venue(v);
     this.city = new City(c);
     this.isFestival = f;
+    this.starred = false;
 
     var year = MAINSTREAM.currentDate.getFullYear();
     var concertMonth = parseInt(this.date.split(".")[1]);
@@ -323,7 +339,11 @@ function Concert(d, a, v, c, f) {
 }
 
 Concert.prototype.render = function() {
-    return "";
+    var starredHTML = "";
+    if (this.starred) {
+        starredHTML = "active";
+    }
+    return "<p class='concert' data-uuid='" + this.uuid + "'>" + "<span class='star "+ starredHTML+ "'>⭐️</span>" + this.getDate() + ". <strong>" + this.artist + "</strong>, " + this.venue.venue + ", " + this.city.city + "</p>";
 };
 
 Concert.prototype.getDate = function() {

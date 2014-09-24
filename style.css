@@ -45,6 +45,8 @@ header {
     box-shadow: none;
 }
 
+
+
 #cities ul {
     padding: 0;
 }
@@ -71,6 +73,24 @@ header {
 #content {
     max-width: 960px;
     margin: 0 auto;
+}
+
+.concert{
+    margin-left: -25px;
+}
+
+.concert:hover {
+    cursor: pointer;
+}
+
+.star {
+    width: 25px;
+    display: inline-block;
+    visibility: hidden;
+}
+
+.star.active {
+    visibility: visible;
 }
 
 #data {
