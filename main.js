@@ -214,9 +214,18 @@ var MAINSTREAM = {
 
     renderConcerts: function(list) {
         var element = $("#concerts");
+        var lastDate = null;
         element.empty();
         for (var i = 0; i < list.length; i++) {
-            element.append("<p>" + list[i].getDate() + ". <strong>" + list[i].artist + "</strong>, " + list[i].venue.venue + ", " + list[i].city.city + "</p>");
+            if (list[i].getDate() != lastDate) {
+                element.append("<p class='date-separator'>" + list[i].getDate() + "</p>");
+            }
+            if (list[i].isFestival) {
+                element.append("<p>"+ list[i].getDate() + ".<strong>" + list[i].artist + "</strong>, " + list[i].venue.venue + ", " + list[i].city.city + "</p>");
+            } else {
+                element.append("<p><strong>" + list[i].artist + "</strong>, " + list[i].venue.venue + ", " + list[i].city.city + "</p>");
+            }
+            lastDate = list[i].getDate();
         };
     },
 

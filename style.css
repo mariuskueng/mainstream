@@ -45,6 +45,11 @@ header {
     box-shadow: none;
 }
 
+.date-separator {
+    margin: 40px 0 10px;
+    font-weight: bold;
+}
+
 #cities ul {
     padding: 0;
 }
