@@ -111,7 +111,7 @@ var MAINSTREAM = {
             pickedDate = new Date(picker.component.item.select.pick);
             concertsOnDate = [];
             for (var i = 0; i < MAINSTREAM.concerts.length; i++) {
-                if (pickedDate - MAINSTREAM.concerts[i].date == 0) {
+                if (pickedDate - MAINSTREAM.concerts[i].date === 0) {
                     concertsOnDate.push(MAINSTREAM.concerts[i]);
                 }
             }
@@ -135,7 +135,7 @@ var MAINSTREAM = {
 
         // convert all text to a string and omit the last 3 lines
         for (var i = 0; i < data.results.konzerte.length - 3; i++) {
-            concertData += "\n" + data.results.konzerte[i].data.text
+            concertData += "\n" + data.results.konzerte[i].data.text;
         }
 
         // separate each line into array item
@@ -226,7 +226,7 @@ var MAINSTREAM = {
                 element.append("<p><strong>" + list[i].artist + "</strong>, " + list[i].venue.venue + ", " + list[i].city.city + "</p>");
             }
             lastDate = list[i].getDate();
-        };
+        }
     },
 
     renderCities: function() {
@@ -288,7 +288,7 @@ var MAINSTREAM = {
     },
 
     setLastModifiedText: function(text) {
-        var text = text.trim().replace("»", "");
+        text = text.trim().replace("»", "");
         $(".last-modified").text("Daten zuletzt " + text);
     },
 
@@ -299,7 +299,7 @@ var MAINSTREAM = {
         MAINSTREAM.setActiveCity(city);
     }
 
-}
+};
 
 // Concert class
 function Concert(d, a, v, c, f) {
@@ -337,9 +337,9 @@ Concert.prototype.render = function() {
 
 Concert.prototype.getDate = function() {
     if (this.isFestival) {
-        return ("0" + this.date.getDate()).slice(-2) + ". – " + ("0" + this.endDate.getDate()).slice(-2) + "." + MAINSTREAM.monthNumbers[this.date.getMonth()];
+        return ("0" + this.date.getDate()).slice(-2) + ". – " + ("0" + this.endDate.getDate()).slice(-2) + "." + MAINSTREAM.monthNumbers[this.date.getMonth()] + ".";
     }
-    return ("0" + this.date.getDate()).slice(-2) + "." + MAINSTREAM.monthNumbers[this.date.getMonth()];
+    return ("0" + this.date.getDate()).slice(-2) + "." + MAINSTREAM.monthNumbers[this.date.getMonth()] + ".";
 };
 
 // Venue class
@@ -362,8 +362,8 @@ function City(c) {
         }
     }
 
-    if (this.city == null) {
-        for (var city in MAINSTREAM.cityTypoLookUp) {
+    if (this.city === null) {
+        for (city in MAINSTREAM.cityTypoLookUp) {
             if (this.concertText.indexOf(city) > 1) {
                 this.city = MAINSTREAM.cityTypoLookUp[city];
             }
