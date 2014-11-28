@@ -1,0 +1,18 @@
+<template name="cities">
+    <div id="cities">
+        <h2>Städte</h2>
+        <select class="city-select">
+            <option value="alle">Alle</option>
+            <option disabled>──────────</option>
+            {{#each cities}}
+                {{name}}
+            {{/each}}
+        </select>
+        <ul>
+            <li><a href="#alle" class="selected">Alle</a></li>
+            {{#each cities}}
+                <li><a href="#{{slug}}" class="">{{name}}</a></li>
+            {{/each}}
+        </ul>
+    </div>
+</template>

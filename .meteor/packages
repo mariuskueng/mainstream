@@ -1,2 +1,5 @@
 standard-app-packages
 iron:router
+mrt:urlify2@0.2.2
+jquery
+http
