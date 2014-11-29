@@ -8,6 +8,7 @@ Meteor.startup(function () {
       "Bern",
       "Chiasso",
       "Chur",
+      "Cully",
       "Crans-Près-Céligny",
       "Düdingen",
       "Feldkirch",
