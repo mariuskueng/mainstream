@@ -64,4 +64,9 @@ Meteor.startup(function () {
     });
 
   }
+
+  if (Concerts.find().count() === 0) {
+    Meteor.call("loadConcerts");
+  }
+
 });

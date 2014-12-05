@@ -105,4 +105,3 @@ Meteor.methods({
   }
 
 });
-Meteor.call("loadConcerts")
