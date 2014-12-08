@@ -1,6 +1,6 @@
 Meteor.publish('Concerts', function() {
   return Concerts.find();
-})
+});
 
 Meteor.methods({
 
@@ -30,6 +30,7 @@ Meteor.methods({
   parseConcertData: function(concertData) {
     var substringIndex = 0;
     var currentDate = Meteor.call("getCurrentDate");
+    var currentYear = currentDate.getFullYear();
 
     for (var i = 0; i < concertData.length; i++) {
 
@@ -52,9 +53,12 @@ Meteor.methods({
 
       if (dateRange.indexOf("–") > -1) { // is festival
         substringIndex = 11;
+
         date = concertData[i].substring(0, substringIndex);
-        var endDay = date.split("– ")[1].split(".")[0];
-        date = date.split('.')[0];
+        endDate = date.split("– ")[1].split(".")[0];
+        date = new Date(currentDate.getFullYear(), parseInt(date.split(".")[1]) - 1, parseInt(date.split(".")[0]));
+        endDate = new Date(date.getFullYear(), date.getMonth(), endDate);
+
         venue = concertData[i].split("mit");
         venue = venue[0].substring(substringIndex, venue[0].length).trim();
         artist = concertData[i].substring(date.length + venue.length + 1, concertData[i].length).replace("mit ", "");
@@ -83,6 +87,16 @@ Meteor.methods({
         // city get's set in the city constructor
         city = concertData[i];
       }
+
+
+      // adjust concert date year
+      // if current month is smaller than the one before eg. january (1) and december (12)
+      // and the adjusted year isn't bigger than the current year + 1 then
+
+      if (date.getMonth() < currentDate.getMonth()) { // jan < dec
+        date.setYear(date.getFullYear() + 1);
+      }
+
       if (date >= currentDate || endDate >= currentDate) {
         Meteor.call("addConcert", date, endDate, artist, venue, city, isFestival);
       }
