@@ -379,7 +379,7 @@ function kimonoCallback(data) {
 $(document).ready(function(){
     $("#concerts").empty();
     $.ajax({
-        "url":"http://www.kimonolabs.com/api/9pcb6qu6?apikey=94174d4d6c775c2eb6154db4ab889563&callback=kimonoCallback",
+        "url":"https://www.kimonolabs.com/api/9pcb6qu6?apikey=94174d4d6c775c2eb6154db4ab889563&callback=kimonoCallback",
         "crossDomain":true,
         "dataType":"jsonp"
     });
