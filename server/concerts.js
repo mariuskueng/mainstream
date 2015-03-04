@@ -6,7 +6,7 @@ Meteor.methods({
 
   loadConcerts: function() {
     Concerts.remove({});
-    var data = Meteor.http.call("GET", "http://www.kimonolabs.com/api/9pcb6qu6?apikey=94174d4d6c775c2eb6154db4ab889563");
+    var data = Meteor.http.call("GET", "https://www.kimonolabs.com/api/9pcb6qu6?apikey=94174d4d6c775c2eb6154db4ab889563");
     Meteor.call("loadConcertData", data);
   },
 
