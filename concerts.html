@@ -26,7 +26,7 @@ $(document).ready(function(){
         // find all chars followed by a number
         var re = /([a-zA-Z\s])(\d)/g; // /([a-zA-Z\s]\.)(\d)/g
 
-        var str = response.results.konzerte[0].data.text;
+        var str = response.results.konzerte[0].data;
         var subst = "\n";
         var match = str.match(re);
         var result = str.replace(re, "$1\n$2");
