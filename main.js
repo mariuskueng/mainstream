@@ -92,7 +92,7 @@ var MAINSTREAM = {
 
         MAINSTREAM.loadConcertData(data);
         MAINSTREAM.renderCities();
-        MAINSTREAM.setLastModifiedText(data.results.konzerte[data.results.konzerte.length - 1].data.text);
+        MAINSTREAM.setLastModifiedText(data.results.konzerte[data.results.konzerte.length - 1].data);
 
         if (MAINSTREAM.urlCityHash) {
             MAINSTREAM.renderFromCityHash();
@@ -135,7 +135,7 @@ var MAINSTREAM = {
 
         // convert all text to a string and omit the last 3 lines
         for (var i = 0; i < data.results.konzerte.length - 3; i++) {
-            concertData += "\n" + data.results.konzerte[i].data.text;
+            concertData += "\n" + data.results.konzerte[i].data;
         }
 
         // separate each line into array item
@@ -221,7 +221,7 @@ var MAINSTREAM = {
                 element.append("<p class='date-separator'>" + list[i].getDate() + "</p>");
             }
             if (list[i].isFestival) {
-                element.append("<p>"+ list[i].getDate() + ".<strong>" + list[i].artist + "</strong>, " + list[i].venue.venue + ", " + list[i].city.city + "</p>");
+                element.append("<p>"+ list[i].getDate() + "<strong>" + list[i].artist + "</strong>, " + list[i].venue.venue + ", " + list[i].city.city + "</p>");
             } else {
                 element.append("<p><strong>" + list[i].artist + "</strong>, " + list[i].venue.venue + ", " + list[i].city.city + "</p>");
             }
@@ -288,8 +288,10 @@ var MAINSTREAM = {
     },
 
     setLastModifiedText: function(text) {
+      if (text) {
         text = text.trim().replace("»", "");
         $(".last-modified").text("Daten zuletzt " + text);
+      }
     },
 
     renderFromCityHash: function() {
@@ -372,16 +374,18 @@ function City(c) {
     }
 }
 
-function kimonoCallback(data) {
-    MAINSTREAM.init(data);
-}
-
 $(document).ready(function(){
     $("#concerts").empty();
     $.ajax({
-        "url":"http://www.kimonolabs.com/api/9pcb6qu6?apikey=94174d4d6c775c2eb6154db4ab889563&callback=kimonoCallback",
-        "crossDomain":true,
-        "dataType":"jsonp"
+      url:"https://www.kimonolabs.com/api/9pcb6qu6?apikey=94174d4d6c775c2eb6154db4ab889563",
+      crossDomain: true,
+      dataType: "jsonp",
+      success: function (response) {
+        MAINSTREAM.init(response);
+      },
+      error: function (xhr, status) {
+        alert(xhr, status);
+      }
     });
     MAINSTREAM.urlCityHash = document.location.hash.split("#")[1];
 });
