@@ -1,0 +1,46 @@
+<html>
+<meta charset="utf-8"/>
+<head>
+    <title></title>
+</head>
+<body>
+<script type="text/javascript" src="http://code.jquery.com/jquery-1.11.2.min.js"></script>
+<script type="text/javascript">
+
+var regex = new RegExp("([\>])\d");
+// var str = $('#content').html();
+// console.log(regex.exec(str));
+
+function br2nl(str) {
+    return str.replace(/<br.*\/?>/mg,"\n");
+}
+
+$(document).ready(function(){
+    $.ajax({
+    url:"https://www.kimonolabs.com/api/9pcb6qu6?apikey=94174d4d6c775c2eb6154db4ab889563",
+    crossDomain: true,
+    dataType: "jsonp",
+    success: function (response) {
+        //Do something with the response
+        // https://regex101.com/r/kZ4dU2/1
+        // find all chars followed by a number
+        var re = /([a-zA-Z\s])(\d)/g; // /([a-zA-Z\s]\.)(\d)/g
+
+        var str = response.results.konzerte[0].data.text;
+        var subst = "\n";
+        var match = str.match(re);
+        var result = str.replace(re, "$1\n$2");
+        // console.log(str);
+        // br2nl(str);
+        console.log(result);
+
+    },
+    error: function (xhr, status) {
+      //handle errors
+    }
+    });
+});
+
+</script>
+</body>
+</html>
