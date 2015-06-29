@@ -65,6 +65,7 @@ header {
     color: #FFF;
     display: inline-block;
     text-decoration: none;
+    text-transform: capitalize;
 }
 
 #cities li a.selected {
